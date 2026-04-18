@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kido Community | Lien et Origine</title>
+    
+    <link rel="icon" type="image/jpeg" href="https://imgur.com/Cl4RqsF.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Sans+JP:wght@300;700&family=Shojumaru&family=Cormorant+Garamond:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --mist-primary: #a3c9c9;
+            --mist-accent: #688f8f;
+            --mist-glow: rgba(163, 201, 201, 0.4);
+            --dark-fog: #0f1213;
+            --bg-base: #1a1f21;
+            --glass-border: rgba(163, 201, 201, 0.2);
+            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+        * { cursor: default; box-sizing: border-box; }
+
+        body {
+            color: #e0e6e9;
+            font-family: 'Noto Sans JP', sans-serif;
+            margin: 0;
+            background-color: var(--bg-base);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #mist-particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .vignette {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.6) 100%);
+            z-index: 2; pointer-events: none;
+        }
+
+        header {
+            position: fixed; width: 100%; padding: 25px 60px;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000;
+        }
+
+        .logo-top { height: 65px; filter: drop-shadow(0 0 15px var(--mist-glow)); }
+
+        .hero { 
+            position: relative; z-index: 3; height: 100vh; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            text-align: center;
+        }
+
+        .mist-title { 
+            font-family: 'Shojumaru', cursive; 
+            font-size: clamp(2.5rem, 8vw, 5rem); 
+            color: #fff;
+            text-shadow: 0 0 40px var(--mist-glow);
+        }
+
+        .hero-author {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: 8px;
+            color: var(--mist-primary);
+            margin-top: 15px;
+            text-transform: uppercase;
+        }
+
+        .main-section { position: relative; z-index: 3; padding: 50px 5% 150px; }
+
+        .lore-grid { 
+            display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+            max-width: 1200px; margin: 0 auto;
+        }
+
+        .clickable-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 50px 30px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border-radius: 8px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            display: flex; flex-direction: column; align-items: center;
+            width: 340px;
+        }
+
+        .clickable-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--mist-primary);
+            background: rgba(163, 201, 201, 0.05);
+        }
+
+        .logo-spell-grid { 
+            width: 110px; height: 110px; border-radius: 50%; margin-bottom: 25px; 
+            border: 2px solid var(--mist-accent); padding: 8px; object-fit: cover;
+            transition: 0.8s ease;
+        }
+
+        .details-section { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(10, 15, 17, 0.98); z-index: 3000;
+            display: none; align-items: flex-start; justify-content: center;
+            overflow-y: auto; padding: 60px 20px;
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .details-section.active { display: flex; opacity: 1; }
+
+        .content-box {
+            position: relative;
+            max-width: 850px; width: 100%;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 60px; border: 1px solid var(--glass-border);
+            border-radius: 4px;
+            transform: translateY(30px);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .corner-logo {
+            position: absolute;
+            top: 20px;
+            width: 45px;
+            height: auto;
+            filter: drop-shadow(0 0 8px var(--mist-glow));
+            opacity: 0.8;
+            pointer-events: none;
+        }
+        .logo-left { left: 20px; }
+        .logo-right { right: 20px; }
+
+        .lore-text h4 {
+            font-family: 'Cinzel', serif; color: var(--mist-primary);
+            margin: 40px 0 20px 0; border-bottom: 1px solid var(--mist-glow);
+            display: inline-block; letter-spacing: 3px;
+        }
+
+        .lore-text p {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; 
+            line-height: 1.7; color: #d1d9e0; margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .info-label { color: var(--mist-primary); font-weight: bold; font-family: 'Cinzel'; }
+
+        .tree-container { display: flex; flex-direction: column; align-items: center; margin-top: 40px; }
+        .tree-row { display: flex; justify-content: center; gap: 25px; margin-bottom: 30px; flex-wrap: wrap; }
+        .tree-node {
+            border: 1px solid var(--mist-accent); padding: 18px 30px;
+            background: rgba(163, 201, 201, 0.05); text-align: center;
+            min-width: 220px; border-radius: 4px;
+        }
+        .tree-node .role { font-size: 0.75rem; color: var(--mist-primary); display: block; font-family: 'Cinzel'; margin-bottom: 8px; }
+        .tree-node .name { font-family: 'Noto Sans JP'; font-weight: bold; color: #fff; }
+
+        .btn-close {
+            display: inline-block; padding: 15px 45px; margin-top: 50px;
+            border: 1px solid var(--mist-primary);
+            color: var(--mist-primary); text-decoration: none;
+            font-family: 'Cinzel', serif; letter-spacing: 4px;
+            cursor: pointer; transition: var(--transition-smooth);
+            background: transparent;
+        }
+        .btn-close:hover { background: var(--mist-primary); color: #1a1f21; }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="mist-particles"></canvas>
+    <div class="vignette"></div>
+
+    <header>
+        <img src="https://imgur.com/Cl4RqsF.png" alt="Kido Logo" class="logo-top">
+    </header>
+
+    <section id="home" class="hero">
+        <h1 class="mist-title" data-aos="zoom-in">Lien et Origine</h1>
+        <div class="hero-author" data-aos="fade-up" data-aos-delay="400">Shinkiri</div>
+    </section>
+
+    <section id="lore" class="main-section">
+        <div class="lore-grid">
+            <div class="clickable-card" data-aos="fade-up" data-aos-delay="100" onclick="openModal('details-history')">
+                <img src="https://imgur.com/UgNCxqf.png" class="logo-spell-grid" alt="Lolan">
+                <h3>Histoire du Perso</h3>
+                <p>Shinkiri</p>
+            </div>
+
+            <div class="clickable-card" data-aos="fade-up" data-aos-delay="200" onclick="openModal('details-goal')">
+                <img src="https://imgur.com/ipwAidp.png" class="logo-spell-grid" alt="Objectif">
+                <h3>Objectif</h3>
+                <p>Ambitions & Destinée</p>
+            </div>
+
+            <div class="clickable-card" data-aos="fade-up" data-aos-delay="300" onclick="openModal('details-tree')">
+                <img src="https://imgur.com/gkxjb4Z.png" class="logo-spell-grid" alt="Arbre">
+                <h3>Arbre Généalogie</h3>
+                <p>Lignage Komachi</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="details-history" class="details-section">
+        <div class="content-box">
+            <img src="https://imgur.com/T42Ynar.png" class="corner-logo logo-left">
+            <img src="https://imgur.com/T42Ynar.png" class="corner-logo logo-right">
+            
+            <img src="https://imgur.com/UgNCxqf.png" class="main-img" style="width: 110px; display: block; margin: 0 auto 25px; border-radius: 50%; border: 2px solid var(--mist-primary); padding: 5px;">
+            <h2 style="text-align: center; font-family: 'Cinzel'; color: #fff; letter-spacing: 6px; margin-bottom: 40px; font-size: 2rem;">MÉMOIRES DE SHINKIRI</h2>
+            
+            <div class="lore-text">
+                <p>À huit ans, Shinkiri ne connaissait pas l'amitié ou le rire des autres enfants. Pour lui, la vie se résumait au balancement des bambous et à la voix de son père Yozora.</p>
+                <p style="font-style: italic; color: #a3c9c9; border-left: 2px solid var(--mist-primary); padding-left: 15px;">
+                    « Regarde tes mains, Shinkiri, » ordonna son père en le soulevant par le cou. « Elles sont vides. Ta mère nous a abandonnés parce qu'elle ne comprenait pas la grandeur de ton potentiel ainsi que de notre lignée. Ici, tu es caché, tu es protégé, mais tu as une dette envers le notre nom. »
+                </p>
+                <p>Shinkiri ne répondit pas. Ses grands yeux clairs fixaient un papillon qui tentait de rentré dans leurs demeures. Il était déjà ce garçon étrangement calme, dont l'esprit était celui d'un simple enfant encore innocent.</p>
+                <p>Yozora ramassa un sabre en bois et le lança aux pieds de son fils.<br>
+                « Relève-toi. Si tu ne maîtrises pas un minimum ce Sabre, tu ne seras jamais rien. Tu veux être un véritable Pourfendeurs ou une proie ? »</p>
+                <p>Le petit garçon ramassa l'arme sans un mot. Ses mouvements étaient lents, presque oniriques. Yozora le manipulait avec une cruauté certaine, lui répétant sans cesse que le monde extérieur était un enfer et que seul son entraînement de Pourfendeur lui donnerait le droit d'exister. Chaque blessure, chaque chute dans la boue était justifiée par ce "destin" familial.</p>
+                <p>« Père... pourquoi devenir un chasseur de démon ? » demanda Shinkiri d'une voix monotone après des heures de combat.</p>
+                <p>Yozora s'approcha et posa une main lourde sur sa tête, une affection feinté qui cachait une emprise totale.<br>
+                « Parce que, Shinkiri. Il est désormais tant pour toi de grandir, de suivre la voie de notre Clan. »</p>
+                <p>Sous l'œil sévère de son père, l'enfant de huit ans reprit sa garde. Il ne sentait plus la fatigue, ni même la tristesse. À force d'être seul et caché, il était devenu invisible, froid et dépourvu d'émotions. Ce jour-là, 4 ans après, dans la vallée ou se trouver le domaine de son père, Shinkiri commença à disparaître pour laisser place aux pourfendeurs qu'il devait être, quitté son père, pour devenir un pourfendeur plus grand, plus intelligent et surtout faire comprendre à ces démons qu'elle est la vrai souffrance qu'autrefois les Komachi leurs ont fait subir.</p>
+            </div>
+            <div style="text-align: center;"><div class="btn-close" onclick="closeModal('details-history')">Fermer</div></div>
+        </div>
+    </div>
+
+    <div id="details-goal" class="details-section">
+        <div class="content-box">
+            <img src="https://imgur.com/T42Ynar.png" class="corner-logo logo-left">
+            <img src="https://imgur.com/T42Ynar.png" class="corner-logo logo-right">
+            
+            <img src="https://imgur.com/ipwAidp.png" class="main-img" style="width: 110px; display: block; margin: 0 auto 25px; border-radius: 50%; border: 2px solid var(--mist-primary); padding: 5px;">
+            <h2 style="text-align: center; font-family: 'Cinzel'; color: #fff; letter-spacing: 6px; margin-bottom: 40px; font-size: 2rem;">AMBITIONS</h2>
+            <div class="lore-text">
+                <p><span class="info-label">1. LA SUCCESSION :</span> Transmettre le nom à un Pourfendeur expérimenté (rang Kinoto ou Hinoto/oe) adepte du Souffle de la Brume, afin d'assurer une suite du clan avant même que Shinkiri ne soit en âge de le diriger.</p>
+                
+                <p><span class="info-label">2. L'EXPANSION :</span> Objectif à long terme : Ne pas limiter le nom "Komachi" aux seuls utilisateurs de la Brume. Shinkiri cherchera, au fil de ses rencontres, des Pourfendeurs de valeur (peu importe leur souffle) pour les intégrer à sa famille.</p>
+                
+                <p><span class="info-label">3. L'ÉVOLUTION :</span> Le personnage commence jeune et sous l'influence de la manipulation de son père. Son calme et son détachement influenceront sa manière de choisir les pourfendeurs qui porteront le nom.</p>
+                
+                <p style="font-style: italic; font-size: 1.1rem; border-top: 1px solid var(--glass-border); padding-top: 15px;">
+                    <span class="info-label">FLEXIBILITÉ :</span> Les objectifs restent malléables selon les événements du RP, les rencontres marquantes ou les traumatismes subis en mission.
+                </p>
+            </div>
+            <div style="text-align: center;"><div class="btn-close" onclick="closeModal('details-goal')">Fermer</div></div>
+        </div>
+    </div>
+
+    <div id="details-tree" class="details-section">
+        <div class="content-box">
+            <img src="https://imgur.com/T42Ynar.png" class="corner-logo logo-left">
+            <img src="https://imgur.com/T42Ynar.png" class="corner-logo logo-right">
+            
+            <img src="https://imgur.com/gkxjb4Z.png" class="main-img" style="width: 100px; display: block; margin: 0 auto 25px; filter: drop-shadow(0 0 15px var(--mist-glow));">
+            <h2 style="text-align: center; font-family: 'Cinzel'; color: #fff; letter-spacing: 6px; margin-bottom: 40px; font-size: 2rem;">LIGNAGE KOMACHI</h2>
+            <div class="tree-container">
+                <div class="tree-row">
+                    <div class="tree-node"><span class="role">Arrière-Grand-Père</span><span class="name">Komachi B. Vyzir</span></div>
+                    <div class="tree-node"><span class="role">Arrière-Grand-Mère</span><span class="name">Kiyoko Akimatsu</span></div>
+                </div>
+                <div class="tree-row">
+                    <div class="tree-node"><span class="role">Grand-Père</span><span class="name">Kurushimeru Akimatsu</span></div>
+                </div>
+                <div class="tree-row">
+                    <div class="tree-node"><span class="role">Père</span><span class="name">Komachi B. Yozora</span></div>
+                </div>
+                <div class="tree-row">
+                    <div class="tree-node" style="border: 2px solid var(--mist-primary); background: rgba(163, 201, 201, 0.15);">
+                        <span class="role">Héritier</span><span class="name">Komachi Shinkiri</span>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;"><div class="btn-close" onclick="closeModal('details-tree')">Fermer</div></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        let isModalOpen = false;
+
+        function openModal(id) {
+            isModalOpen = true; 
+            const modal = document.getElementById(id);
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }, 10);
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                isModalOpen = false;
+            }, 500);
+        }
+
+        const canvas = document.getElementById('mist-particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let w, h;
+        function initCanvas() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * w; this.y = Math.random() * h;
+                this.size = Math.random() * 100 + 50;
+                this.speedX = (Math.random() - 0.5) * 0.3;
+                this.speedY = (Math.random() - 0.5) * 0.15;
+                this.opacity = Math.random() * 0.06;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.x < -150) this.x = w + 150; if (this.x > w + 150) this.x = -150;
+            }
+            draw() {
+                ctx.globalAlpha = this.opacity;
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = '#a3c9c9'; ctx.fill();
+            }
+        }
+        function createParticles() {
+            particles = [];
+            for(let i=0; i<30; i++) particles.push(new Particle());
+        }
+        function animate() {
+            if(!isModalOpen) {
+                ctx.clearRect(0, 0, w, h);
+                for(let p of particles) { p.update(); p.draw(); }
+            }
+            requestAnimationFrame(animate);
+        }
+        window.addEventListener('resize', () => { initCanvas(); createParticles(); });
+        initCanvas(); createParticles(); animate();
+    </script>
+</body>
+</html>
